@@ -1,0 +1,180 @@
+html,
+body {
+  font-size: 14px;
+  height: 100%;
+  min-height: 100%;
+  overflow-y: auto !important;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol;
+  background-color: #f2f3f3;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.p-overlaypanel-enter {
+  opacity: 0;
+  transform: none;
+}
+
+.p-overlaypanel-leave-to {
+  opacity: 0;
+}
+
+.p-overlaypanel-enter-active {
+  transition: none;
+}
+
+.p-overlaypanel-leave-active {
+  transition: none;
+}
+
+.p-dialog {
+  min-width: 480px;
+}
+
+.p-dialog-footer {
+  display: flex;
+}
+
+.list-item {
+  background: transparent;
+  display: flex;
+  transition: background 0.2s;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.list-item.list-item-striped:not(:last-child) {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.list-item-checkbox {
+  padding: 1rem;
+  flex: 0 0 auto;
+}
+
+.list-item-checkbox + .list-item-body .list-item-content,
+.list-item-checkbox + .list-item-content {
+  padding-left: 0;
+}
+
+.list-item:hover {
+  background: rgba(241, 241, 241, 0.6);
+}
+
+.list-item-body {
+  display: flex;
+  transition: background 0.2s;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  flex: 1 1 auto;
+  width:100%;
+}
+
+.list-item-content {
+  padding: 1rem;
+  flex: 1 1 auto;
+}
+
+.list-item-action {
+  flex: 0 0 auto;
+  padding: 1rem;
+}
+
+.list-item-title {}
+
+.list-item-subtitle {
+  font-size: 0.85rem;
+  color: #424242;
+}
+
+.subheader {
+  font-weight: 500;
+  color: #5a5a5a;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.no-data-title {
+  font-size: 1.5rem;
+  color: #ccc;
+  padding: 2rem;
+  text-align: center;
+}
+
+.status-badge {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+}
+
+.status-badge.status-badge-info {
+  background-color: #b3e5fc;
+  color: #23547b;
+}
+
+.status-badge.status-badge-success {
+  background-color: #c8e6c9;
+  color: #256029;
+}
+
+.status-badge.status-badge-error {
+  background-color: #ffcdd2;
+  color: #c63737;
+}
+
+.status-badge.status-badge-secondary {
+  background-color: #6c757d;
+  color: #495057;
+}
+
+a.p-button {
+  text-decoration: none !important;
+}
+
+.info-container {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-container-icon{
+  width: 8rem;
+  height: auto;
+  margin: 1rem;
+}
+
+.info-container-title{
+  font-size: 1.85rem;
+  margin: 1rem 1rem 2rem 1rem;
+  color: var(--text-color-secondary)
+}
+
+.p-toast{
+  z-index: 9999
+}
+
+.p-toast-detail{
+  overflow: visible;
+  word-break: break-all;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary{
+  font-weight: 500;
+}
