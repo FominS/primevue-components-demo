@@ -1,7 +1,19 @@
 <template>
   <div class="p-field p-fluid">
     <label v-if="label" :for="id">{{ label }}</label>
-    <PrimeDropdown :id="id" :value="value" v-bind="$attrs" :class="{ 'p-invalid': error }" @input="inputValue">
+    <PrimeDropdown
+      :id="id"
+      :value="value"
+      v-bind="$attrs"
+      :class="{ 'p-invalid': error }"
+      @input="inputValue"
+      @change="change"
+      @filter="filter"
+      @before-show="$emit('before-show')"
+      @before-hide="$emit('before-hide')"
+      @show="$emit('show')"
+      @hide="$emit('hide')"
+    >
       <template #value="slotProps">
         <slot name="value" :value="slotProps.value" :placeholder="slotProps.placeholder"></slot>
       </template>
@@ -50,5 +62,14 @@ export default class Dropdown extends Vue {
   inputValue(newValue: string | object) {
     this.$emit("input", newValue);
   }
+
+  change(event: Event) {
+    this.$emit("change", event);
+  }
+
+  filter(event: Event) {
+    this.$emit("filter", event);
+  }
+  
 }
 </script>
