@@ -56,6 +56,10 @@
             </template>
           </Dropdown>
           <div>Selected value: {{ city }}</div>
+          <div>
+            <h3>Events</h3>
+            <Textarea :autoResize="true" v-model="events"></Textarea>
+          </div>
         </template>
       </Card>
     </div>
@@ -125,6 +129,7 @@ export default class DropdownDemo extends Vue {
   filter = false;
   isObject = true;
   scrollHeight = "";
+  events="";
 
   get cityError() {
     let error = "";
@@ -134,21 +139,27 @@ export default class DropdownDemo extends Vue {
   }
 
   change() {
-    console.info("%c change", "color: green");
+    this.events += "change \n";
+    console.info("%c change ", "color: green");
   }
   filtered() {
+    this.events += "filter \n";
     console.info("%c filter", "color: red");
   }
   show() {
+    this.events += "show \n";
     console.info("%c show", "color: yellow");
   }
   hide() {
+    this.events += "hide \n";
     console.info("%c hide", "color: blue");
   }
   beforeShow() {
+    this.events += "beforeShow \n";
     console.info("%c beforeShow", "color: gray");
   }
   beforeHide() {
+    this.events += "beforeHide \n";
     console.info("%c beforeHide", "color: purple");
   }
 }
