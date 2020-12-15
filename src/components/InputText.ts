@@ -3,12 +3,6 @@ import PrimeInput from "primevue/components/inputtext/InputText.vue";
 import { CreateElement, VNode } from "vue";
 import { Component, Vue, Prop } from "vue-property-decorator";
 
-declare module "vue/types/vue" {
-  interface Vue {
-    _uid: number;
-  }
-}
-
 type ButtonSize = "small" | "normal" | "large"
 
 @Component({ components: { PrimeInput } })

@@ -15,7 +15,6 @@
               :prepend-icon="iconLocation == 'prepend' ? 'pi pi-user' : ''"
 							:append-icon="iconLocation == 'append' ? 'pi pi-spin pi-spinner' : ''"
               :disabled="disabled"
-              
             ></InputText>
           </div>
         </template>

@@ -1,5 +1,11 @@
 import Vue, { VNode } from 'vue'
 
+declare module "vue/types/vue" {
+  interface Vue {
+    _uid: number;
+  }
+}
+
 declare global {
   namespace JSX {
     // tslint:disable no-empty-interface
