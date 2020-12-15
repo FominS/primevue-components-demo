@@ -7,7 +7,6 @@ import PerfectScrollbar from "vue2-perfect-scrollbar";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 
 import ProgressBar from 'primevue/progressbar';
-import Textarea from "primevue/textarea";
 import Button from "primevue/button";
 import Message from 'primevue/message';
 import Listbox from "primevue/listbox";
@@ -26,6 +25,7 @@ import Menubar from 'primevue/menubar';
 import RadioButton from 'primevue/radiobutton';
 
 import InputText from '@/components/InputText.ts';
+import Textarea from '@/components/Textarea';
 import Dropdown from '@/components/Dropdown.vue';
 
 import 'primeflex/primeflex.css';
