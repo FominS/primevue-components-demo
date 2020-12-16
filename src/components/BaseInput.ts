@@ -24,11 +24,35 @@ export default abstract class BaseInput<T> extends Vue {
     };
   }
 
+  protected get prependSlot(): VNode[] | undefined {
+    if (this.$scopedSlots.prepend) {
+      return this.$scopedSlots.prepend({});
+    }
+    return undefined;
+  }
+
+  protected get appendSlot(): VNode[] | undefined {
+    if (this.$scopedSlots.append) {
+      return this.$scopedSlots.append({});
+    }
+    return undefined;
+  }
+
   protected get children(): VNode[] {
     const children: VNode[] = [];
 
     this.label && children.push(this.createLabel());
+
+    if (this.prependSlot) {
+      children.push(...this.prependSlot);
+    }
+
     children.push(this.createInput());
+
+    if (this.appendSlot) {
+      children.push(...this.appendSlot);
+    }
+
     this.error && children.push(this.createErrorMesage());
 
     return children;
