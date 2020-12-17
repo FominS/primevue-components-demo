@@ -1,4 +1,4 @@
-import { VNodeData, VNode } from "vue";
+import { VNodeData, VNode, Component } from "vue";
 import { Vue, Prop } from "vue-property-decorator";
 
 export default abstract class BaseInput<T> extends Vue {
@@ -24,17 +24,48 @@ export default abstract class BaseInput<T> extends Vue {
     };
   }
 
-  protected get children(): VNode[] {
+  private get prependSlot(): VNode[] | undefined {
+    if (this.$scopedSlots.rootPrepend) {
+      return this.$scopedSlots.rootPrepend({});
+    }
+    return undefined;
+  }
+
+  private get appendSlot(): VNode[] | undefined {
+    if (this.$scopedSlots.rootAppend) {
+      return this.$scopedSlots.rootAppend({});
+    }
+    return undefined;
+  }
+
+  protected get inputScopedSlots() {
+    // FIX почему не работает import { ScopedSlot } from vue
+    // eslint-disable-next-line
+    const result: Record<string, any> = {};
+    return Object.keys(this.$scopedSlots).reduce(
+      (slots, slotName) => {
+        if (["rootPrepend", "rootAppend"].includes(slotName)) return slots;
+
+        slots[slotName] = this.$scopedSlots[slotName];
+        return slots;
+      },
+      result
+    )
+  }
+
+  protected getChildren(input: Component): VNode[] {
     const children: VNode[] = [];
 
     this.label && children.push(this.createLabel());
-    children.push(this.createInput());
+    this.prependSlot && children.push(...this.prependSlot);
+    children.push(this.createInput(input));
+    this.appendSlot && children.push(...this.appendSlot);
     this.error && children.push(this.createErrorMesage());
 
     return children;
   }
 
-  protected createLabel() {
+  private createLabel() {
     return this.$createElement(
       "label",
       {
@@ -47,7 +78,7 @@ export default abstract class BaseInput<T> extends Vue {
     );
   }
 
-  protected createErrorMesage() {
+  private createErrorMesage() {
     return this.$createElement(
       "small",
       {
@@ -57,5 +88,15 @@ export default abstract class BaseInput<T> extends Vue {
     );
   }
 
-  abstract createInput(): VNode;
+  protected createInput(input: Component) {
+    return this.$createElement(input, {
+      props: { value: this.value },
+      attrs: {
+        ...this.$attrs,
+        id: this.innerId
+      },
+      on: this.$listeners,
+      scopedSlots: this.inputScopedSlots
+    });
+  }
 }

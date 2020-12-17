@@ -5,6 +5,7 @@ import Sandbox from "@/views/Sandbox.vue";
 import InputTextDemo from "../views/InputTextDemo.vue";
 import DropdownDemo from "@/views/DropdownDemo.vue";
 import InputMask from "@/views/InputMaskDemo.vue";
+import TextareaDemo from "@/views/TextareaDemo.vue";
 
 import { RouteConfig } from "vue-router";
 import { CreateElement } from "vue/types/umd";
@@ -47,6 +48,14 @@ export const routes: RouteConfig[] = [
         component: DropdownDemo,
         meta: {
           title: "Выпадающий список"
+        }
+      },
+      {
+        name: "textarea",
+        path: "/textarea",
+        component: TextareaDemo,
+        meta: {
+          title: "Текстовая область"
         }
       },
       {
