@@ -7,7 +7,6 @@ import PerfectScrollbar from "vue2-perfect-scrollbar";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 
 import ProgressBar from 'primevue/progressbar';
-import Textarea from "primevue/textarea";
 import Button from "primevue/button";
 import Message from 'primevue/message';
 import Listbox from "primevue/listbox";
@@ -24,8 +23,10 @@ import Paginator from "primevue/paginator";
 import Tooltip from 'primevue/tooltip';
 import Menubar from 'primevue/menubar';
 import RadioButton from 'primevue/radiobutton';
+import PrimeTextarea from 'primevue/textarea';
 
 import InputText from '@/components/InputText.ts';
+import Textarea from '@/components/Textarea.ts';
 import Dropdown from '@/components/Dropdown.vue';
 
 import 'primeflex/primeflex.css';
@@ -40,7 +41,7 @@ Vue.use(Vuelidate);
 Vue.use(PerfectScrollbar);
 
 Vue.component("ProgressBar", ProgressBar);
-Vue.component("Textarea", Textarea);
+Vue.component("TextArea", Textarea);
 Vue.component("Button", Button);
 Vue.component("Message", Message);
 Vue.component("Card", Card);
@@ -57,6 +58,7 @@ Vue.component("Calendar", Calendar);
 Vue.component("Paginator", Paginator);
 Vue.component("Menubar", Menubar);
 Vue.component("RadioButton", RadioButton);
+Vue.component("PrimeTextarea", PrimeTextarea);
 
 Vue.component("InputText", InputText);
 Vue.component("Dropdown", Dropdown);
