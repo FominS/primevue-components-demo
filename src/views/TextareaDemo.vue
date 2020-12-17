@@ -5,10 +5,10 @@
         <template #title> Textarea </template>
         <template #content>
           <text-area v-model="value" v-bind="attrs" :class="getClass()">
-            <template #prepend v-if="prependSlot">
+            <template #rootPrepend v-if="prependSlot">
               <i class="pi pi-search" />
             </template>
-            <template #append v-if="appendSlot">
+            <template #rootAppend v-if="appendSlot">
               <i class="pi pi-spin pi-spinner" />
             </template>
           </text-area>
