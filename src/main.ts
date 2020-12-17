@@ -27,6 +27,7 @@ import RadioButton from 'primevue/radiobutton';
 import InputText from '@/components/InputText.ts';
 import Textarea from '@/components/Textarea';
 import Dropdown from '@/components/Dropdown.vue';
+import InputMask from '@/components/InputMask.ts';
 
 import 'primeflex/primeflex.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
@@ -60,6 +61,7 @@ Vue.component("RadioButton", RadioButton);
 
 Vue.component("InputText", InputText);
 Vue.component("Dropdown", Dropdown);
+Vue.component("InputMask", InputMask);
 
 Vue.directive('tooltip', Tooltip);
 

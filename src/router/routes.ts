@@ -4,6 +4,7 @@ import Sandbox from "@/views/Sandbox.vue";
 
 import InputTextDemo from "../views/InputTextDemo.vue";
 import DropdownDemo from "@/views/DropdownDemo.vue";
+import InputMask from "@/views/InputMaskDemo.vue";
 
 import { RouteConfig } from "vue-router";
 import { CreateElement } from "vue/types/umd";
@@ -54,6 +55,14 @@ export const routes: RouteConfig[] = [
         component: Sandbox,
         meta: {
           title: "Песочница"
+        }
+      },
+      {
+        name: "InputMaskSanbox",
+        path: "/input-mask",
+        component: InputMask,
+        meta: {
+          title: "Поле ввода с маской"
         }
       },
     ]   

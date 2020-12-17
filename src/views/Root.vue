@@ -22,6 +22,7 @@ export default class Root extends Vue {
     {label: "InputText", to: "/input-text"},
     {label: "Dropdown", to: "/dropdown"},
     {label: "Sandbox", to: "/sandbox"},
+    {label: "InputMask", to: "/input-mask"},
   ];
 }
 </script>
