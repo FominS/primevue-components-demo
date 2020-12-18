@@ -1,16 +1,17 @@
 import { VNode, Component } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { Vue, Prop } from "vue-property-decorator";
+import "@/components/styles/BaseInput.scss"
 
 export default abstract class BaseInput<T> extends Vue {
   @Prop({ required: false })
-  readonly value!: T;
+  readonly value?: T;
 
   @Prop({ required: false })
-  readonly label!: string;
+  readonly label?: string;
 
   @Prop({ required: false })
-  readonly id!: string;
+  readonly id?: string;
 
   @Prop({ required: false })
   readonly error?: string;
@@ -59,9 +60,7 @@ export default abstract class BaseInput<T> extends Vue {
     return this.$createElement(
       "label",
       {
-        style: {
-          display: "block"
-        },
+        class: "base-input__label",
         attrs: {
           for: this.innerId,
           class: "p-mb-1"
@@ -75,10 +74,7 @@ export default abstract class BaseInput<T> extends Vue {
     return this.$createElement(
       "small",
       {
-        style: {
-          display: "block"
-        },
-        class: "p-invalid"
+        class: "base-input__error p-invalid"
       },
       this.error
     );
@@ -87,9 +83,7 @@ export default abstract class BaseInput<T> extends Vue {
   protected createInput(input: Component) {
     return this.$createElement(input, {
       props: { value: this.value },
-      style: {
-        width: "100%"
-      },
+      class: "base-input__input",
       attrs: {
         ...this.$attrs,
         id: this.innerId
