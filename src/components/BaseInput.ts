@@ -1,4 +1,4 @@
-import { VNodeData, VNode, Component } from "vue";
+import { VNode, Component } from "vue";
 import { ScopedSlot } from "vue/types/vnode";
 import { Vue, Prop } from "vue-property-decorator";
 
