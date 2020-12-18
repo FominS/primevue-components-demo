@@ -7,6 +7,6 @@ import BaseInput from "@/components/BaseInput";
 })
 export default class Textarea extends BaseInput<string> {
   render() {
-    return this.$createElement("div", this.wrapperOptions, this.getChildren(PrimeTextarea));
+    return this.$createElement("div", this.getChildren(PrimeTextarea));
   }
 }

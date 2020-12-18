@@ -37,7 +37,7 @@ class CustomDropdown extends BaseInput<{ name: string; code: string }> {
   }
 
   render() {
-    return this.$createElement("div", this.wrapperOptions, this.getChildren(PrimeDropdown));
+    return this.$createElement("div", this.getChildren(PrimeDropdown));
   }
 }
 
