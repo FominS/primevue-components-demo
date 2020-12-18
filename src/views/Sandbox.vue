@@ -28,6 +28,9 @@ class CustomDropdown extends BaseInput<{ name: string; code: string }> {
         value: this.value,
         // inputId: this.innerId
       },
+      style: {
+        width: "100%"
+      },
       attrs: {
         ...this.$attrs
       },
