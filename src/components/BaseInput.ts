@@ -1,27 +1,23 @@
-import { VNodeData, VNode, Component } from "vue";
+import { VNode, Component } from "vue";
+import { ScopedSlot } from "vue/types/vnode";
 import { Vue, Prop } from "vue-property-decorator";
+import "@/components/styles/BaseInput.scss"
 
 export default abstract class BaseInput<T> extends Vue {
   @Prop({ required: false })
-  readonly value!: T;
+  readonly value?: T;
 
   @Prop({ required: false })
-  readonly label!: string;
+  readonly label?: string;
 
   @Prop({ required: false })
-  readonly id!: string;
+  readonly id?: string;
 
   @Prop({ required: false })
   readonly error?: string;
 
   protected get innerId() {
     return this.id || `cbr_input_${this._uid}`;
-  }
-
-  protected get wrapperOptions(): VNodeData {
-    return {
-      style: "display: flex; flex-direction: column"
-    };
   }
 
   private get prependSlot(): VNode[] | undefined {
@@ -39,18 +35,13 @@ export default abstract class BaseInput<T> extends Vue {
   }
 
   protected get inputScopedSlots() {
-    // FIX почему не работает import { ScopedSlot } from vue
-    // eslint-disable-next-line
-    const result: Record<string, any> = {};
-    return Object.keys(this.$scopedSlots).reduce(
-      (slots, slotName) => {
-        if (["rootPrepend", "rootAppend"].includes(slotName)) return slots;
+    const result: Record<string, ScopedSlot | undefined> = {};
+    return Object.keys(this.$scopedSlots).reduce((slots, slotName) => {
+      if (["rootPrepend", "rootAppend"].includes(slotName)) return slots;
 
-        slots[slotName] = this.$scopedSlots[slotName];
-        return slots;
-      },
-      result
-    )
+      slots[slotName] = this.$scopedSlots[slotName];
+      return slots;
+    }, result);
   }
 
   protected getChildren(input: Component): VNode[] {
@@ -69,6 +60,7 @@ export default abstract class BaseInput<T> extends Vue {
     return this.$createElement(
       "label",
       {
+        class: "base-input__label",
         attrs: {
           for: this.innerId,
           class: "p-mb-1"
@@ -82,7 +74,7 @@ export default abstract class BaseInput<T> extends Vue {
     return this.$createElement(
       "small",
       {
-        class: "p-invalid"
+        class: "base-input__error p-invalid"
       },
       this.error
     );
@@ -91,6 +83,7 @@ export default abstract class BaseInput<T> extends Vue {
   protected createInput(input: Component) {
     return this.$createElement(input, {
       props: { value: this.value },
+      class: "base-input__input",
       attrs: {
         ...this.$attrs,
         id: this.innerId
