@@ -5,9 +5,9 @@ import BaseInput from "@/components/BaseInput";
 @Component({
   inheritAttrs: false
 })
-export default class Textarea extends BaseInput<string> {
+export default class InputMask extends BaseInput<string> {
 
   render() {
-    return this.$createElement("div", this.wrapperOptions, this.getChildren(PrimeInputMask));
+    return this.$createElement("div", this.getChildren(PrimeInputMask));
   }
 }
