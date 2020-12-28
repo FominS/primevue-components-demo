@@ -37,7 +37,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Checkbox from "primevue/components/checkbox/Checkbox";
 
-const checkbox = Vue.extend({
+export const CbrCheckbox = Vue.extend({
   props: {
     id: String,
     label: String,
@@ -66,7 +66,7 @@ const checkbox = Vue.extend({
 
 @Component({
   components: {
-    "check-box": checkbox
+    "check-box": CbrCheckbox
   }
 })
 export default class TextareaDemo extends Vue {

@@ -23,6 +23,7 @@ export default class Root extends Vue {
     {label: "Dropdown", to: "/dropdown"},
     {label: "Textarea", to: "/textarea"},
     {label: "Sandbox", to: "/sandbox"},
+    {label: "Sandbox 2", to: "/sandbox-2"},
   ];
 }
 </script>

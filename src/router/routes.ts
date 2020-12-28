@@ -1,6 +1,7 @@
 import Home from "../views/Home.vue";
 import Root from "../views/Root.vue";
 import Sandbox from "@/views/Sandbox.vue";
+import Sandbox2 from "@/views/Sandbox2.vue";
 
 import InputTextDemo from "../views/InputTextDemo.vue";
 import DropdownDemo from "@/views/DropdownDemo.vue";
@@ -61,6 +62,14 @@ export const routes: RouteConfig[] = [
         name: "sandbox",
         path: "/sandbox",
         component: Sandbox,
+        meta: {
+          title: "Песочница"
+        }
+      },
+      {
+        name: "sandbox-2",
+        path: "/sandbox-2",
+        component: Sandbox2,
         meta: {
           title: "Песочница"
         }
