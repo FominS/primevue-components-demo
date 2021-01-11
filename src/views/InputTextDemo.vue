@@ -27,14 +27,8 @@
           Options
         </template>
         <template #content>
-          <div class="p-field-checkbox">
-            <Checkbox id="label" v-model="showLabel" :binary="true" />
-            <label for="label">Show label</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="label" v-model="disabled" :binary="true" />
-            <label for="label">Disabled</label>
-          </div>
+          <check-box v-model="showLabel" label="Show label"></check-box>
+          <check-box v-model="disabled" label="Disabled"></check-box>
           <hr>
           <div>
             <h3>Icons</h3>
@@ -43,12 +37,12 @@
               <label for="icon1">None</label>
             </div>
 						<div class="p-field-radiobutton">
-              <RadioButton id="icon1" name="icon" value="prepend" v-model="iconLocation" />
-              <label for="icon1">Prepend icon</label>
+              <RadioButton id="icon2" name="icon" value="prepend" v-model="iconLocation" />
+              <label for="icon2">Prepend icon</label>
             </div>
             <div class="p-field-radiobutton">
-              <RadioButton id="icon2" name="icon" value="append" v-model="iconLocation" />
-              <label for="icon2">Append icon</label>
+              <RadioButton id="icon3" name="icon" value="append" v-model="iconLocation" />
+              <label for="icon3">Append icon</label>
             </div>
           </div>
           <hr>
@@ -79,11 +73,15 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { required } from "vuelidate/lib/validators";
+import Checkbox from "@/components/Checkbox.ts";
 
 type ButtonSize = "small" | "normal" | "large";
 type IconLocation = "prepend" | "append" | "" ;
 
 @Component({
+  components: {
+    "check-box": Checkbox
+  },
   validations: {
     text: { required }
   }

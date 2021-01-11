@@ -2,9 +2,7 @@
   <div class="p-grid">
     <div class="p-col">
       <Card>
-        <template #title>
-          Dropdown
-        </template>
+        <template #title> Dropdown </template>
         <template #content>
           <Dropdown
             v-model="value"
@@ -50,30 +48,13 @@
     </div>
     <div class="p-col">
       <Card>
-        <template #title>
-          Options
-        </template>
+        <template #title> Options </template>
         <template #content>
-          <div class="p-field-checkbox">
-            <Checkbox id="label" v-model="showLabel" :binary="true" />
-            <label for="label">Label</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="disabled" v-model="disabled" :binary="true" />
-            <label for="disabled">Disabled</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="disabled" v-model="showClear" :binary="true" />
-            <label for="disabled">Clearable</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="slots" v-model="activeSlots" :binary="true" />
-            <label for="slots">Active slots</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="filter" v-model="filter" :binary="true" />
-            <label for="filter">Filter</label>
-          </div>
+          <check-box v-model="showLabel" label="Label" />
+          <check-box v-model="disabled" label="Disabled" />
+          <check-box v-model="showClear" label="Clearable" />
+          <check-box v-model="activeSlots" label="Active slots" />
+          <check-box v-model="filter" label="Filter" />
           <hr />
           <InputText v-model="scrollHeight" label="Scroll height"></InputText>
         </template>
@@ -83,8 +64,13 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import CheckBox from "@/components/Checkbox.ts";
 
-@Component
+@Component({
+  components: {
+    CheckBox
+  }
+})
 export default class DropdownDemo extends Vue {
   value = {};
   disabled = false;

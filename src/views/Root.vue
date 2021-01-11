@@ -1,9 +1,9 @@
 <template>
   <div class="app">
     <Menubar :model="menu">
-       <template #start>
-        <img alt="logo" src="@/assets/logo.prime.svg" height="40" class="p-mr-2">
-    </template>
+      <template #start>
+        <img alt="logo" src="@/assets/logo.prime.svg" height="40" class="p-mr-2" />
+      </template>
     </Menubar>
     <div class="content">
       <keep-alive include="NotificationList">
@@ -19,11 +19,9 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class Root extends Vue {
   menu = [
-    {label: "InputText", to: "/input-text"},
-    {label: "Dropdown", to: "/dropdown"},
-    {label: "Textarea", to: "/textarea"},
-    {label: "Sandbox", to: "/sandbox"},
-    {label: "Sandbox 2", to: "/sandbox-2"},
+    { label: "InputText", to: "/input-text" },
+    { label: "Dropdown", to: "/dropdown" },
+    { label: "Textarea", to: "/textarea" }
   ];
 }
 </script>
@@ -40,7 +38,7 @@ export default class Root extends Vue {
 
 .content {
   padding: 1rem;
-  height: calc( 100% - 60px );
+  height: calc(100% - 60px);
   overflow-y: auto;
 }
 
