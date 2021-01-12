@@ -5,36 +5,43 @@
         <template #title> Dropdown </template>
         <template #content>
           <Dropdown
-            v-model="value"
+            v-model="city"
             :options="cities"
-            :label="label"
+            :label="showLabel ? 'City' : ''"
+            optionLabel="name"
+            :optionValue="!isObject ? 'code' : ''"
+            placeholder="Select city"
             :disabled="disabled"
             :showClear="showClear"
             :filter="filter"
             :scrollHeight="scrollHeight + 'px'"
             :error="error"
             :hint="hint"
-            optionLabel="name"
-            placeholder="Select city"
             filterPlaceholder="Find city"
+            @change="change"
+            @filter="filtered"
+            @before-show="beforeShow"
+            @before-hide="beforeHide"
+            @show="show"
+            @hide="hide"
           ></Dropdown>
 
           <Dropdown
-            v-if="activeSlots"
-            v-model="value"
+            v-model="city"
             :options="cities"
+            :label="showLabel ? 'City with slots' : ''"
+            optionLabel="name"
+            :optionValue="!isObject ? 'code' : ''"
+            optionDisabled="true"
+            placeholder="Select city"
             :disabled="disabled"
             :showClear="showClear"
             :filter="filter"
-            :error="error"
-            :hint="hint"
-            label="City with slots"
-            optionLabel="name"
-            placeholder="Select city"
+            :error="cityError"
           >
             <template #value="slotProps">
               <div class="country-item country-item-value" v-if="slotProps.value">
-                <div><i class="pi pi-check"></i> {{ slotProps.value.name }}</div>
+                <div><i class="pi pi-check"></i> {{ isObject ? slotProps.value.name : slotProps.value }}</div>
               </div>
               <span v-else>
                 {{ slotProps.placeholder }}
@@ -46,7 +53,11 @@
               </div>
             </template>
           </Dropdown>
-          <div>Selected value: {{ value }}</div>
+          <div>Selected value: {{ city }}</div>
+          <div>
+            <h3>Events</h3>
+            <Textarea :autoResize="true" v-model="events"></Textarea>
+          </div>
         </template>
       </Card>
     </div>
@@ -54,13 +65,36 @@
       <Card>
         <template #title> Options </template>
         <template #content>
-          <input-options :label.sync="label" :hint.sync="hint" :error.sync="error"></input-options>
-          <check-box v-model="disabled" label="Disabled" />
-          <check-box v-model="showClear" label="Clearable" />
-          <check-box v-model="activeSlots" label="Active slots" />
-          <check-box v-model="filter" label="Filter" />
+          <div class="p-field-checkbox">
+            <Checkbox id="label" v-model="showLabel" :binary="true" />
+            <label for="label">Label</label>
+          </div>
+          <div class="p-field-checkbox">
+            <Checkbox id="disabled" v-model="disabled" :binary="true" />
+            <label for="disabled">Disabled</label>
+          </div>
+          <div class="p-field-checkbox">
+            <Checkbox id="disabled" v-model="showClear" :binary="true" />
+            <label for="disabled">Clearable</label>
+          </div>
+          <div class="p-field-checkbox">
+            <Checkbox id="slots" v-model="activeSlots" :binary="true" />
+            <label for="slots">Active slots</label>
+          </div>
+          <div class="p-field-checkbox">
+            <Checkbox id="filter" v-model="filter" :binary="true" />
+            <label for="filter">Filter</label>
+          </div>
+          <div class="p-field-checkbox">
+            <Checkbox id="filter" v-model="isObject" :binary="true" />
+            <label for="filter">Value is object</label>
+          </div>
           <hr />
-          <InputText v-model="scrollHeight" label="Scroll height, px" placeholder="Enter a number"></InputText>
+          <InputText v-model="scrollHeight" label="Scroll height"></InputText>
+          <hr />
+          <div class="p-field">
+            <Button @click="$v.$touch()">Проверить валидацию</Button>
+          </div>
         </template>
       </Card>
     </div>
@@ -68,17 +102,15 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import CheckBox from "@/components/Checkbox.ts";
-import InputOptions from "@/components/auxiliary/InputOptions.vue";
+import { required } from "vuelidate/lib/validators";
 
 @Component({
-  components: {
-    CheckBox,
-    InputOptions
+  validations: {
+    city: { required }
   }
 })
 export default class DropdownDemo extends Vue {
-  value = {};
+  city = null;
   disabled = false;
   cities = [
     { name: "New York", code: "NY" },
@@ -91,8 +123,40 @@ export default class DropdownDemo extends Vue {
   showClear = false;
   activeSlots = false;
   filter = false;
+  isObject = true;
   scrollHeight = "";
-  error = "";
-  hint = "";
+  events="";
+
+  get cityError() {
+    let error = "";
+    if (!this.$v.city.$dirty) return error;
+    !this.$v.city.required && (error = "Обязательно выберите город");
+    return error;
+  }
+
+  change() {
+    this.events += "change \n";
+    console.info("%c change ", "color: green");
+  }
+  filtered() {
+    this.events += "filter \n";
+    console.info("%c filter", "color: red");
+  }
+  show() {
+    this.events += "show \n";
+    console.info("%c show", "color: yellow");
+  }
+  hide() {
+    this.events += "hide \n";
+    console.info("%c hide", "color: blue");
+  }
+  beforeShow() {
+    this.events += "beforeShow \n";
+    console.info("%c beforeShow", "color: gray");
+  }
+  beforeHide() {
+    this.events += "beforeHide \n";
+    console.info("%c beforeHide", "color: purple");
+  }
 }
 </script>
