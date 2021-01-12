@@ -2,9 +2,7 @@
   <div class="p-grid">
     <div class="p-col">
       <Card>
-        <template #title>
-          Dropdown
-        </template>
+        <template #title> Dropdown </template>
         <template #content>
           <Dropdown
             v-model="city"
@@ -16,7 +14,7 @@
             :disabled="disabled"
             :showClear="showClear"
             :filter="filter"
-            :scrollHeight="scrollHeight"
+            :scrollHeight="scrollHeight + 'px'"
             filterPlaceholder="Find city"
             :error="cityError"
             @change="change"
@@ -25,6 +23,7 @@
             @before-hide="beforeHide"
             @show="show"
             @hide="hide"
+            :hint="hint"
           ></Dropdown>
 
           <Dropdown
@@ -40,6 +39,7 @@
             v-if="activeSlots"
             :filter="filter"
             :error="cityError"
+            :hint="hint"
           >
             <template #value="slotProps">
               <div class="country-item country-item-value" v-if="slotProps.value">
@@ -65,36 +65,17 @@
     </div>
     <div class="p-col">
       <Card>
-        <template #title>
-          Options
-        </template>
+        <template #title> Options </template>
         <template #content>
-          <div class="p-field-checkbox">
-            <Checkbox id="label" v-model="showLabel" :binary="true" />
-            <label for="label">Label</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="disabled" v-model="disabled" :binary="true" />
-            <label for="disabled">Disabled</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="disabled" v-model="showClear" :binary="true" />
-            <label for="disabled">Clearable</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="slots" v-model="activeSlots" :binary="true" />
-            <label for="slots">Active slots</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="filter" v-model="filter" :binary="true" />
-            <label for="filter">Filter</label>
-          </div>
-          <div class="p-field-checkbox">
-            <Checkbox id="filter" v-model="isObject" :binary="true" />
-            <label for="filter">Value is object</label>
-          </div>
+          <InputText v-model="hint" label="Hint"></InputText>
+          <CheckBox v-model="showLabel" label="Label" />
+          <CheckBox v-model="disabled" label="Disabled" />
+          <CheckBox v-model="showClear" label="Clearable" />
+          <CheckBox v-model="activeSlots" label="Active slots" />
+          <CheckBox v-model="filter" label="Filter" />
+          <CheckBox v-model="isObject" label="Value is an object" />
           <hr />
-          <InputText v-model="scrollHeight" label="Scroll height"></InputText>
+          <InputText v-model="scrollHeight" label="Scroll height, px" placeholder="Enter a number"></InputText>
           <hr />
           <div class="p-field">
             <Button @click="$v.$touch()">Проверить валидацию</Button>
@@ -107,8 +88,12 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { required } from "vuelidate/lib/validators";
+import CheckBox from "@/components/Checkbox.ts";
 
 @Component({
+  components: {
+    CheckBox
+  },
   validations: {
     city: { required }
   }
@@ -129,7 +114,8 @@ export default class DropdownDemo extends Vue {
   filter = false;
   isObject = true;
   scrollHeight = "";
-  events="";
+  events = "";
+  hint = "";
 
   get cityError() {
     let error = "";
@@ -137,7 +123,6 @@ export default class DropdownDemo extends Vue {
     !this.$v.city.required && (error = "Обязательно выберите город");
     return error;
   }
-
   change() {
     this.events += "change \n";
     console.info("%c change ", "color: green");

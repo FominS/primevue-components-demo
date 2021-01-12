@@ -1,77 +1,49 @@
-import { VNodeData, VNode, Component } from "vue";
-import { Vue, Prop } from "vue-property-decorator";
+import { VNode } from "vue";
+import { Vue, Prop, Component } from "vue-property-decorator";
 
-export default abstract class BaseInput<T> extends Vue {
+@Component
+export default class BaseInput extends Vue {
   @Prop({ required: false })
-  readonly value!: T;
-
-  @Prop({ required: false })
-  readonly label!: string;
+  readonly value?: any;
 
   @Prop({ required: false })
-  readonly id!: string;
+  readonly label?: string;
 
   @Prop({ required: false })
   readonly error?: string;
 
+  @Prop({ required: false })
+  readonly hint?: string;
+
   protected get innerId() {
-    return this.id || `cbr_input_${this._uid}`;
+    return this.$attrs.id || `cbr_input_${this._uid}`;
   }
 
-  protected get wrapperOptions(): VNodeData {
-    return {
-      style: "display: flex; flex-direction: column"
-    };
+  protected get hasError() {
+    return !!this.error;
   }
 
-  private get prependSlot(): VNode[] | undefined {
-    if (this.$scopedSlots.rootPrepend) {
-      return this.$scopedSlots.rootPrepend({});
-    }
-    return undefined;
-  }
-
-  private get appendSlot(): VNode[] | undefined {
-    if (this.$scopedSlots.rootAppend) {
-      return this.$scopedSlots.rootAppend({});
-    }
-    return undefined;
-  }
-
-  protected get inputScopedSlots() {
-    // FIX почему не работает import { ScopedSlot } from vue
-    // eslint-disable-next-line
-    const result: Record<string, any> = {};
-    return Object.keys(this.$scopedSlots).reduce(
-      (slots, slotName) => {
-        if (["rootPrepend", "rootAppend"].includes(slotName)) return slots;
-
-        slots[slotName] = this.$scopedSlots[slotName];
-        return slots;
+  render() {
+    return this.$createElement(
+      "div",
+      {
+        staticClass: "p-field p-fluid"
       },
-      result
-    )
+      [this.createLabel(), this.createInput(), this.createHint(), this.createErrorMesage()]
+    );
   }
 
-  protected getChildren(input: Component): VNode[] {
-    const children: VNode[] = [];
-
-    this.label && children.push(this.createLabel());
-    this.prependSlot && children.push(...this.prependSlot);
-    children.push(this.createInput(input));
-    this.appendSlot && children.push(...this.appendSlot);
-    this.error && children.push(this.createErrorMesage());
-
-    return children;
+  createInput(): VNode[] | VNode | undefined {
+    return this.$slots.default;
   }
 
   private createLabel() {
+    if (!this.label) return null;
     return this.$createElement(
       "label",
       {
         attrs: {
-          for: this.innerId,
-          class: "p-mb-1"
+          for: this.innerId
         }
       },
       this.label
@@ -79,24 +51,24 @@ export default abstract class BaseInput<T> extends Vue {
   }
 
   private createErrorMesage() {
+    if (!this.hasError) return null;
     return this.$createElement(
       "small",
       {
-        class: "p-invalid"
+        staticClass: "p-invalid"
       },
       this.error
     );
   }
 
-  protected createInput(input: Component) {
-    return this.$createElement(input, {
-      props: { value: this.value },
-      attrs: {
-        ...this.$attrs,
-        id: this.innerId
+  private createHint() {
+    if (!this.hint) return null;
+    return this.$createElement(
+      "small",
+      {
+        staticClass: "p-field__hint"
       },
-      on: this.$listeners,
-      scopedSlots: this.inputScopedSlots
-    });
+      this.hint
+    );
   }
 }

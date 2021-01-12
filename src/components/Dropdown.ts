@@ -1,16 +1,15 @@
-import PrimeTextarea from "primevue/components/textarea/Textarea.vue";
+import PrimeDropdown from "primevue/components/dropdown/Dropdown.vue";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 
-@Component({
-  inheritAttrs: false
-})
-export default class Textarea extends BaseInput {
+@Component({ inheritAttrs: false })
+export default class Dropdown extends BaseInput {
   createInput() {
-    return this.$createElement(PrimeTextarea, {
+    return this.$createElement(PrimeDropdown, {
       props: { value: this.value },
+      scopedSlots: this.$scopedSlots,
       attrs: {
-        id: this.innerId,
+        inputId: this.innerId,
         ...this.$attrs
       },
       class: {"p-invalid": this.hasError},

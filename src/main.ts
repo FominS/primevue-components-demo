@@ -27,7 +27,7 @@ import PrimeTextarea from 'primevue/textarea';
 
 import InputText from '@/components/InputText.ts';
 import Textarea from '@/components/Textarea.ts';
-import Dropdown from '@/components/Dropdown.vue';
+import Dropdown from '@/components/Dropdown.ts';
 
 import 'primeflex/primeflex.css';
 import 'primevue/resources/themes/saga-blue/theme.css';

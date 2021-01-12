@@ -1,105 +1,66 @@
-
 import PrimeInput from "primevue/components/inputtext/InputText.vue";
-import { CreateElement, VNode } from "vue";
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
+import BaseInput from "@/components/BaseInput";
 
-type ButtonSize = "small" | "normal" | "large"
+type ButtonSize = "small" | "normal" | "large";
 
-@Component({ components: { PrimeInput } })
-export default class InputText extends Vue {
-  @Prop({ required: true })
-  readonly value!: string;
-
-  @Prop({ required: false })
-  readonly label?: string;
-
-  @Prop({ required: false })
-  readonly error?: string;
-
-  @Prop({ required: false, default: "normal" })
+@Component({ inheritAttrs: false })
+export default class InputText extends BaseInput {
+  @Prop({ required: false, default: "normal", type: String })
   readonly size!: ButtonSize;
 
-  @Prop({ required: false })
+  @Prop({ required: false, type: String })
   readonly prependIcon?: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, type: String })
   readonly appendIcon?: string;
 
-  id: string = "input_" + this._uid;
-
-  render(h: CreateElement) {
-    this.$attrs.id = this.id;
-    const childs = [];
-
-    if (this.label) {
-      childs.push(this.createLabel(h));
-    }
-
-    const inputText = this.createTextInput(h);
-    this.prependIcon || this.appendIcon ? childs.push(this.createInputWithIcon(h, inputText)) : childs.push(inputText);
-
-    if (this.error) {
-      childs.push(this.createErrorMesage(h));
-    }
-    return h("div", { class: "p-field p-fluid" }, childs);
+  get classList() {
+    return {
+      "p-invalid": this.hasError,
+      "p-inputtext-lg": this.size === "large",
+      "p-inputtext-sm": this.size === "small"
+    };
   }
 
-  /* computed */
-  get classList(){
-    const classList = [];
-    this.error && classList.push("p-invalid");
-    this.size === "large" && classList.push("p-inputtext-lg");
-    this.size === "small" && classList.push("p-inputtext-sm");
-    return classList;
+  get hasPrependIcon() {
+    return this.prependIcon != undefined;
   }
 
-  /* methods */
-  changeValue(newValue: string) {
-    this.$emit("input", newValue);
+  get hasAppendIcon() {
+    return this.appendIcon != undefined;
   }
 
-  focus(event: Event) {
-    this.$emit("focus", event);
+  get hasIcon() {
+    return this.hasAppendIcon || this.hasPrependIcon;
   }
 
-  blur(event: Event) {
-    this.$emit("blur", event);
+  createInput() {
+    return this.hasIcon ? this.createInputWithIcon() : this.createTextInput();
   }
 
-  click(event: Event){
-    this.$emit('click', event)
-  }
-
-  createTextInput(h: CreateElement) {
-    return h("PrimeInput", {
+  createTextInput() {
+    return this.$createElement(PrimeInput, {
       props: { value: this.value },
-      attrs: this.$attrs,
+      attrs: {
+        id: this.innerId,
+        ...this.$attrs
+      },
       class: this.classList,
-      on: {
-        input: this.changeValue,
-        focus: this.focus,
-        blur: this.blur,
-        click: this.click
-      }
+      on: this.$listeners
     });
   }
 
-  createInputWithIcon(h: CreateElement, input: VNode) {
-    return h("span", { class: { "p-input-icon-left": this.prependIcon, "p-input-icon-right": this.appendIcon } }, [
-      this.createIcon(h),
-      input
-    ]);
+  createInputWithIcon() {
+    return this.$createElement(
+      "span",
+      { class: { "p-input-icon-left": this.hasPrependIcon, "p-input-icon-right": this.hasAppendIcon } },
+      [this.createIcon(this.prependIcon), this.createTextInput(), this.createIcon(this.appendIcon)]
+    );
   }
 
-  createLabel(h: CreateElement) {
-    return h("label", { attrs: { for: this.id } }, this.label);
-  }
-
-  createIcon(h: CreateElement) {
-    return h("i", { class: [this.prependIcon, this.appendIcon] });
-  }
-
-  createErrorMesage(h: CreateElement) {
-    return h("small", { class: "p-invalid", attrs: { id: this.id + "_help" } }, this.error);
+  createIcon(iconClass?: string) {
+    if (!iconClass) return null;
+    return this.$createElement("i", { staticClass: iconClass });
   }
 }
