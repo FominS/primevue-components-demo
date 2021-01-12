@@ -12,8 +12,8 @@
               :label="showLabel ? 'Username' : ''"
               :error="textError"
               :size="size"
-              :prepend-icon="iconLocation == 'prepend' ? 'pi pi-user' : ''"
-							:append-icon="iconLocation == 'append' ? 'pi pi-spin pi-spinner' : ''"
+              :prepend-icon="iconLocation == 'prepend' ? 'pi pi-user' : null"
+							:append-icon="iconLocation == 'append' ? 'pi pi-spin pi-spinner' : null"
               :disabled="disabled"
               :hint="hint"              
             ></InputText>
