@@ -12,11 +12,9 @@
       <Card>
         <template #title> Options </template>
         <template #content>
-          <InputText v-model="label" label="Label"></InputText>
-          <InputText v-model="rows" label="Rows QTY"></InputText>
+          <input-options :label.sync="label" :error.sync="error" :hint.sync="hint"></input-options>
           <InputText v-model="placeholder" label="Placeholder"></InputText>
-          <InputText v-model="error" label="Error"></InputText>
-          <InputText v-model="hint" label="Hint"></InputText>
+          <InputText v-model="rows" label="Rows QTY"></InputText>
           <check-box v-model="autoResize" label="Autosize"></check-box>
           <check-box v-model="readonly" label="Readonly"></check-box>
           <check-box v-model="disabled" label="Disabled"></check-box>
@@ -28,9 +26,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Checkbox from "@/components/Checkbox.ts";
+import InputOptions from "@/components/auxiliary/InputOptions.vue";
 
 @Component({
   components: {
+    InputOptions,
     "check-box": Checkbox
   }
 })

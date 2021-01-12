@@ -15,7 +15,7 @@
               :prepend-icon="iconLocation == 'prepend' ? 'pi pi-user' : ''"
 							:append-icon="iconLocation == 'append' ? 'pi pi-spin pi-spinner' : ''"
               :disabled="disabled"
-              
+              :hint="hint"              
             ></InputText>
           </div>
         </template>
@@ -27,6 +27,7 @@
           Options
         </template>
         <template #content>
+          <InputText v-model="hint" label="Hint"></InputText>
           <check-box v-model="showLabel" label="Show label"></check-box>
           <check-box v-model="disabled" label="Disabled"></check-box>
           <hr>
@@ -92,7 +93,7 @@ export default class InputTextDemo extends Vue {
   size: ButtonSize = "normal";
   iconLocation: IconLocation = "";
   disabled = false;
-
+  hint = "";
 
   get textError() {
     let error = "";

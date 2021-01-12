@@ -9,7 +9,7 @@ export default class Dropdown extends BaseInput {
       props: { value: this.value },
       scopedSlots: this.$scopedSlots,
       attrs: {
-        id: this.innerId,
+        inputId: this.innerId,
         ...this.$attrs
       },
       class: {"p-invalid": this.hasError},
