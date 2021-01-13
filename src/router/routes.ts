@@ -1,19 +1,12 @@
-import Home from "../views/Home.vue";
-import Root from "../views/Root.vue";
+import { RouteConfig } from "vue-router";
+import Home from "@/views/Home.vue";
+import Root from "@/views/Root.vue";
 import Sandbox from "@/views/Sandbox.vue";
 
-import InputTextDemo from "../views/InputTextDemo.vue";
+import InputTextDemo from "@/views/InputTextDemo.vue";
 import DropdownDemo from "@/views/DropdownDemo.vue";
 import TextareaDemo from "@/views/TextareaDemo.vue";
-
-import { RouteConfig } from "vue-router";
-import { CreateElement } from "vue/types/umd";
-
-
-
-const rootComponent = (createElement: CreateElement) => {
-  return createElement("router-view");
-};
+import AutoCompleteDemo from "@/views/AutoCompleteDemo.vue";
 
 export const routes: RouteConfig[] = [
   {
@@ -21,7 +14,7 @@ export const routes: RouteConfig[] = [
     component: Root,
     meta: {
       authorization: {
-        scopes: [],
+        scopes: []
       }
     },
     children: [
@@ -58,6 +51,14 @@ export const routes: RouteConfig[] = [
         }
       },
       {
+        name: "autocomplete",
+        path: "/autocomplete",
+        component: AutoCompleteDemo,
+        meta: {
+          title: "Автокомплит"
+        }
+      },
+      {
         name: "sandbox",
         path: "/sandbox",
         component: Sandbox,
@@ -65,7 +66,6 @@ export const routes: RouteConfig[] = [
           title: "Песочница"
         }
       }
-    ]   
+    ]
   }
-  
 ];

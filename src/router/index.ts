@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter, { NavigationGuard } from "vue-router";
+import VueRouter from "vue-router";
 import { routes } from "./routes";
 
 Vue.use(VueRouter);

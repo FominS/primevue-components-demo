@@ -4,7 +4,7 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 @Component
 export default class BaseInput extends Vue {
   @Prop({ required: false })
-  readonly value?: any;
+  readonly value?: unknown;
 
   @Prop({ required: false })
   readonly label?: string;

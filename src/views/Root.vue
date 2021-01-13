@@ -21,7 +21,8 @@ export default class Root extends Vue {
   menu = [
     { label: "InputText", to: "/input-text" },
     { label: "Dropdown", to: "/dropdown" },
-    { label: "Textarea", to: "/textarea" }
+    { label: "Textarea", to: "/textarea" },
+    { label: "AutoComplete", to: "/autocomplete" }
   ];
 }
 </script>

@@ -17,17 +17,21 @@ import Toolbar from "primevue/toolbar";
 import SelectButton from 'primevue/selectbutton';
 import Dialog from 'primevue/dialog';
 import Menu from 'primevue/menu';
-import Autocomplete from "primevue/autocomplete";
+import PrimeAutoComplete from "primevue/autocomplete";
 import Calendar from "primevue/calendar";
 import Paginator from "primevue/paginator";
 import Tooltip from 'primevue/tooltip';
 import Menubar from 'primevue/menubar';
 import RadioButton from 'primevue/radiobutton';
 import PrimeTextarea from 'primevue/textarea';
+import Panel from 'primevue/panel';
+import InputNumber from 'primevue/inputnumber';
 
-import InputText from '@/components/InputText.ts';
-import Textarea from '@/components/Textarea.ts';
-import Dropdown from '@/components/Dropdown.ts';
+import { InputWrapper } from '@/components/auxiliary';
+import InputText from '@/components/InputText';
+import Textarea from '@/components/Textarea';
+import Dropdown from '@/components/Dropdown';
+import AutoComplete from '@/components/AutoComplete';
 
 import 'primeflex/primeflex.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
@@ -53,15 +57,19 @@ Vue.component("DataView", DataView);
 Vue.component("SelectButton", SelectButton);
 Vue.component("Dialog", Dialog);
 Vue.component("Menu", Menu);
-Vue.component("AutoComplete", Autocomplete);
+Vue.component("PrimeAutoComplete", PrimeAutoComplete);
 Vue.component("Calendar", Calendar);
 Vue.component("Paginator", Paginator);
 Vue.component("Menubar", Menubar);
 Vue.component("RadioButton", RadioButton);
 Vue.component("PrimeTextarea", PrimeTextarea);
+Vue.component("Panel", Panel);
+Vue.component("InputNumber", InputNumber);
 
+Vue.component("InputWrapper", InputWrapper);
 Vue.component("InputText", InputText);
 Vue.component("Dropdown", Dropdown);
+Vue.component("AutoComplete", AutoComplete);
 
 Vue.directive('tooltip', Tooltip);
 
