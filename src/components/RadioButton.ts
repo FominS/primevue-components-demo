@@ -1,4 +1,4 @@
-import Checkbox from "primevue/components/checkbox/Checkbox";
+import RadioButton from "primevue/components/radiobutton/RadioButton";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
@@ -9,7 +9,7 @@ import { Component, Prop } from "vue-property-decorator";
     event: "input"
   }
 })
-export default class WrappedCheckbox extends Vue {
+export default class WrappedRadioButton extends Vue {
   @Prop() id?: string;
   @Prop() label?: string;
   @Prop() modelValue?: boolean;
@@ -29,9 +29,8 @@ export default class WrappedCheckbox extends Vue {
       },
       this.label
     );
-    const checkbox = this.$createElement(Checkbox, {
+    const radioButton = this.$createElement(RadioButton, {
       props: {
-        binary: true,
         modelValue: this.modelValue
       },
       attrs: { id: this.innerId, ...this.$attrs },
@@ -41,9 +40,9 @@ export default class WrappedCheckbox extends Vue {
     return this.$createElement(
       "div",
       {
-        class: "p-field-checkbox"
+        class: "p-field-radiobutton"
       },
-      [checkbox, label]
+      [radioButton, label]
     );
   }
 }
