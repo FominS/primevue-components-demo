@@ -7,6 +7,7 @@ import InputTextDemo from "@/views/InputTextDemo.vue";
 import DropdownDemo from "@/views/DropdownDemo.vue";
 import TextareaDemo from "@/views/TextareaDemo.vue";
 import AutoCompleteDemo from "@/views/AutoCompleteDemo.vue";
+import MultiSelectDemo from "@/views/MultiSelectDemo.vue";
 
 export const routes: RouteConfig[] = [
   {
@@ -56,6 +57,14 @@ export const routes: RouteConfig[] = [
         component: AutoCompleteDemo,
         meta: {
           title: "Автокомплит"
+        }
+      },
+      {
+        name: "multiselect",
+        path: "/multiselect",
+        component: MultiSelectDemo,
+        meta: {
+          title: "Мультиселект"
         }
       },
       {

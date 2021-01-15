@@ -44,6 +44,9 @@ export default class BaseInput extends Vue {
       {
         attrs: {
           for: this.innerId
+        },
+        style: {
+          cursor: "pointer"
         }
       },
       this.label

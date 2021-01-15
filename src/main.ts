@@ -32,6 +32,7 @@ import InputText from '@/components/InputText';
 import Textarea from '@/components/Textarea';
 import Dropdown from '@/components/Dropdown';
 import AutoComplete from '@/components/AutoComplete';
+import MultiSelect from '@/components/MultiSelect';
 
 import 'primeflex/primeflex.css';
 import 'primevue/resources/themes/saga-blue/theme.css';
@@ -70,6 +71,7 @@ Vue.component("InputWrapper", InputWrapper);
 Vue.component("InputText", InputText);
 Vue.component("Dropdown", Dropdown);
 Vue.component("AutoComplete", AutoComplete);
+Vue.component("MultiSelect", MultiSelect);
 
 Vue.directive('tooltip', Tooltip);
 

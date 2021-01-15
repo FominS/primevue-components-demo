@@ -1,18 +1,19 @@
-import PrimeTextarea from "primevue/components/textarea/Textarea.vue";
+import PrimeMultiSelect from "primevue/multiselect";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 
 @Component({
   inheritAttrs: false
 })
-export default class Textarea extends BaseInput {
+export default class MultiSelect extends BaseInput {
   createInput() {
-    return this.$createElement(PrimeTextarea, {
+    return this.$createElement(PrimeMultiSelect, {
       props: { value: this.value },
       attrs: {
-        id: this.innerId,
+        inputId: this.innerId,
         ...this.$attrs
       },
+      scopedSlots: this.$scopedSlots,
       class: { "p-invalid": this.hasError },
       on: this.$listeners
     });
