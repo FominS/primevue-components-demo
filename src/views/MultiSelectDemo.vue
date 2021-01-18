@@ -1,5 +1,5 @@
 <template>
-  <input-demo :value="value" :tested-events.sync="testedEvents" title="Multiselect">
+  <input-demo :value="value" :tested-events.sync="testedEvents" title="Multiselect" class="demo">
     <template #component>
       <multi-select
         v-model="value"
@@ -13,27 +13,53 @@
         :scroll-height="scrollHeight + 'px'"
         :placeholder="placeholder"
         :disabled="disabled"
+        :filter="filter"
+        :filter-placeholder="filterPlaceholder"
+        :empty-filter-message="emptyFilterMessage"
+        :display="display"
         @change="testEvent('change')"
         @input="testEvent('input')"
-        @beforeShow="testEvent('beforeShow')"
-        @beforeHide="testEvent('beforeHide')"
+        @before-show="testEvent('beforeShow')"
+        @before-hide="testEvent('beforeHide')"
         @show="testEvent('show')"
         @hide="testEvent('hide')"
         @filter="testEvent('filter')"
-        autofocus
       ></multi-select>
     </template>
     <template #options>
       <div class="p-grid">
-        <div class="p-col-4">
+        <div class="p-col-6">
+          <input-text
+            v-model="placeholder"
+            :error="placeholder ? '' : 'Placeholder is required, selected values are not shown without it'"
+            label="Placeholder"
+            autofocus
+          ></input-text>
           <input-options :label.sync="label" :error.sync="error" :hint.sync="hint"></input-options>
           <input-wrapper v-slot="{ b }" class="p-field p-fluid" label="Scroll height, px">
             <input-number v-bind="b" v-model="scrollHeight"></input-number>
           </input-wrapper>
-          <input-text v-model="placeholder" label="Placeholder"></input-text>
           <check-box v-model="disabled" label="Disabled"></check-box>
+          <panel header="Property name or getter function as the disabled flag of an option">
+            <wrapped-radio-button
+              v-for="(value, key) in optionDisabledKeys"
+              v-model="optionDisabled"
+              :value="value"
+              :key="key"
+              :label="key"
+            ></wrapped-radio-button>
+          </panel>
+          <panel header="View of selected items" class="p-mt-2">
+            <wrapped-radio-button
+              v-for="(value, key) in displayKeys"
+              v-model="display"
+              :value="value"
+              :key="key"
+              :label="key"
+            ></wrapped-radio-button>
+          </panel>
         </div>
-        <div class="p-col-4">
+        <div class="p-col-6">
           <panel header="Property name or function as the label of an option">
             <wrapped-radio-button
               v-for="(value, key) in optionLabelKeys"
@@ -56,16 +82,12 @@
               ></wrapped-radio-button>
             </template>
           </panel>
-        </div>
-        <div class="p-col-4">
-          <panel header="Property name or getter function as the disabled flag of an option">
-            <wrapped-radio-button
-              v-for="(value, key) in optionDisabledKeys"
-              v-model="optionDisabled"
-              :value="value"
-              :key="key"
-              :label="key"
-            ></wrapped-radio-button>
+          <panel class="p-mt-2" header="Filter">
+            <check-box v-model="filter" label="Filter"></check-box>
+            <template v-if="filter">
+              <input-text v-model="filterPlaceholder" label="Filter placeholder"></input-text>
+              <input-text v-model="emptyFilterMessage" label="Empty filter message"></input-text>
+            </template>
           </panel>
         </div>
       </div>
@@ -94,8 +116,6 @@ interface Country {
   number?: number;
 }
 
-const itemGetter = (item: Country) => `${item.name} (${item.code})`;
-
 @Component({
   components: {
     WrappedRadioButton,
@@ -108,7 +128,7 @@ export default class MultiSelectDemo extends Vue {
   label = "Label";
   error = "";
   hint = "";
-  value: unknown = null;
+  value: Country[] = [];
   testedEvents: Record<keyof typeof InputEvents, boolean> = {
     change: false,
     input: false,
@@ -129,7 +149,7 @@ export default class MultiSelectDemo extends Vue {
   optionLabelKeys = {
     Name: "name",
     Code: "code",
-    "Getter name + code": itemGetter
+    "Getter name + code": (item: Country) => `${item.name} (${item.code})`
   };
   optionValue: string | null = null;
   useOptionValue = false;
@@ -140,15 +160,23 @@ export default class MultiSelectDemo extends Vue {
     "Don't use": false
   };
   scrollHeight = 200;
-  placeholder: string | null = null;
+  placeholder = "Select a country";
   disabled = false;
+  filter = false;
+  filterPlaceholder = "";
+  emptyFilterMessage = "";
+  display = "comma";
+  displayKeys = {
+    Comma: "comma",
+    Chip: "chip"
+  };
 
   testEvent(type: keyof typeof InputEvents) {
     this.testedEvents[type] = true;
   }
 
   resetValue() {
-    this.value = null;
+    this.value = [];
   }
 
   onUseOptionValueChange() {

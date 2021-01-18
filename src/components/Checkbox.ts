@@ -1,4 +1,4 @@
-import Checkbox from "primevue/components/checkbox/Checkbox";
+import Checkbox from "primevue/checkbox";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 

@@ -1,4 +1,4 @@
-import PrimeTextarea from "primevue/components/textarea/Textarea.vue";
+import PrimeTextarea from "primevue/textarea";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 
