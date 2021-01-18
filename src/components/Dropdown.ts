@@ -12,7 +12,7 @@ export default class Dropdown extends BaseInput {
         inputId: this.innerId,
         ...this.$attrs
       },
-      class: {"p-invalid": this.hasError},
+      class: { "p-invalid": this.hasError },
       on: this.$listeners
     });
   }

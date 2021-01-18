@@ -1,4 +1,4 @@
-import AutoComplete from 'primevue/autocomplete';
+import AutoComplete from "primevue/autocomplete";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 
@@ -12,7 +12,7 @@ export default class Dropdown extends BaseInput {
         id: this.innerId,
         ...this.$attrs
       },
-      class: {"p-invalid": this.hasError},
+      class: { "p-invalid": this.hasError },
       on: this.$listeners
     });
   }
