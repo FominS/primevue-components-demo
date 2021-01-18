@@ -24,7 +24,18 @@
         @show="testEvent('show')"
         @hide="testEvent('hide')"
         @filter="testEvent('filter')"
-      ></multi-select>
+      >
+        <template v-if="useSlots" #value="{ value }">
+          <span v-for="item in value" :key="item.code">
+            <i class="pi pi-star"></i>
+            {{ item.code }}
+          </span>
+        </template>
+        <template v-if="useSlots" #option="{ option, index }">
+          <i class="pi pi-star"></i>
+          {{ index + 1 }} {{ option.name }}
+        </template>
+      </multi-select>
     </template>
     <template #options>
       <div class="p-grid">
@@ -40,6 +51,7 @@
             <input-number v-bind="b" v-model="scrollHeight"></input-number>
           </input-wrapper>
           <check-box v-model="disabled" label="Disabled"></check-box>
+          <check-box v-model="useSlots" label="Use slots"></check-box>
           <panel header="Property name or getter function as the disabled flag of an option">
             <wrapped-radio-button
               v-for="(value, key) in optionDisabledKeys"
@@ -170,6 +182,7 @@ export default class MultiSelectDemo extends Vue {
     Comma: "comma",
     Chip: "chip"
   };
+  useSlots = false;
 
   testEvent(type: keyof typeof InputEvents) {
     this.testedEvents[type] = true;
