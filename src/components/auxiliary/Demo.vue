@@ -1,6 +1,6 @@
 <template>
   <div class="p-grid">
-    <div class="p-col">
+    <div class="p-col-4">
       <Card>
         <template v-if="title" #title> {{ title }} </template>
         <template #content>
@@ -21,7 +21,7 @@
         </template>
       </Card>
     </div>
-    <div class="p-col">
+    <div class="p-col-8">
       <Card>
         <template #title> Options </template>
         <template #content>

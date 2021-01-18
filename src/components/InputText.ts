@@ -1,4 +1,4 @@
-import PrimeInput from "primevue/components/inputtext/InputText.vue";
+import PrimeInput from "primevue/inputtext";
 import { Component, Prop } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 

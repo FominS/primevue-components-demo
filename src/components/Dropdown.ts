@@ -1,4 +1,4 @@
-import PrimeDropdown from "primevue/components/dropdown/Dropdown.vue";
+import PrimeDropdown from "primevue/dropdown";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 
@@ -12,7 +12,7 @@ export default class Dropdown extends BaseInput {
         inputId: this.innerId,
         ...this.$attrs
       },
-      class: {"p-invalid": this.hasError},
+      class: { "p-invalid": this.hasError },
       on: this.$listeners
     });
   }

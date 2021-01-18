@@ -1,4 +1,4 @@
-import RadioButton from "primevue/components/radiobutton/RadioButton";
+import RadioButton from "primevue/radiobutton";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 

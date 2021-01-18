@@ -11,7 +11,16 @@ import { Component, Vue } from "vue-property-decorator";
 export default class App extends Vue {}
 </script>
 <style>
-  .app-wrapper{
-    height: 100%;
-  }
+.app-wrapper {
+  height: 100%;
+}
+
+.demo {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.p-grid.demo {
+  margin: auto;
+}
 </style>

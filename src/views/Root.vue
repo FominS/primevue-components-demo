@@ -19,10 +19,11 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class Root extends Vue {
   menu = [
-    { label: "InputText", to: "/input-text" },
+    { label: "AutoComplete", to: "/autocomplete" },
     { label: "Dropdown", to: "/dropdown" },
-    { label: "Textarea", to: "/textarea" },
-    { label: "AutoComplete", to: "/autocomplete" }
+    { label: "InputText", to: "/input-text" },
+    { label: "MultiSelect", to: "/multiselect" },
+    { label: "Textarea", to: "/textarea" }
   ];
 }
 </script>
