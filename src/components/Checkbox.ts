@@ -31,7 +31,7 @@ export default class WrappedCheckbox extends Vue {
     );
     const checkbox = this.$createElement(Checkbox, {
       props: {
-        binary: true,
+        binary: this.$attrs.binary === false ? false : true,
         modelValue: this.modelValue
       },
       attrs: { id: this.innerId, ...this.$attrs },
