@@ -17,6 +17,10 @@ export default class WrappedCheckbox extends Vue {
   get innerId() {
     return this.id || `custom_input_${this._uid}`;
   }
+  
+  get notBinary() {
+    return ["false", false].includes(this.$attrs.binary);
+  }
 
   render() {
     const label = this.$createElement(
@@ -31,7 +35,7 @@ export default class WrappedCheckbox extends Vue {
     );
     const checkbox = this.$createElement(Checkbox, {
       props: {
-        binary: this.$attrs.binary === false ? false : true,
+        binary: this.notBinary ? false : true,
         modelValue: this.modelValue
       },
       attrs: { id: this.innerId, ...this.$attrs },

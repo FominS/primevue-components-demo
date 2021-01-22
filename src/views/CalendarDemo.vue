@@ -62,15 +62,37 @@
           <check-box v-model="showOtherMonths" label="Show dates of neighbour months (does not work)"></check-box>
           <check-box v-model="selectOtherMonths" label="Neighbour months dates are selectable"></check-box>
           <check-box v-model="monthNavigator" label="Month as a dropdown (does not work)"></check-box>
+          <check-box v-model="showButtonBar" label="Show today and clear buttons"></check-box>
+          <check-box v-model="showWeek" label="Show week numbers"></check-box>
+          <check-box v-model="manualInput" label="Allow entering the date manually via typing"></check-box>
           <check-box v-model="useSlots" label="Use slots (header, footer, date)"></check-box>
+          <panel header="Disabled weekdays">
+            <check-box
+              v-for="(item, index) in $primevue.config.locale.dayNames"
+              v-model="disabledDays"
+              :key="item"
+              :label="item"
+              :value="index"
+              :binary="false"
+            >
+            </check-box>
+          </panel>
         </div>
         <div class="p-col-6">
-          <panel header="Quantity of selected dates">
+          <panel header="Selection mode">
             <radio-button-group
               v-model="selectionMode"
               :keys="selectionModeKeys"
               @change="resetValue"
             ></radio-button-group>
+            <input-wrapper
+              v-if="selectionMode === 'multiple'"
+              v-slot="{ b }"
+              class="p-field p-fluid"
+              label="Maximum number of selectable dates"
+            >
+              <input-number v-bind="b" v-model="maxDateCount" @input="resetValue"></input-number>
+            </input-wrapper>
           </panel>
           <panel class="p-mt-2" header="Icon">
             <check-box v-model="showIcon" label="Show icon"></check-box>
@@ -90,16 +112,25 @@
               </input-wrapper>
             </template>
           </panel>
-          <panel class="p-mt-2" header="Disabled weekdays">
-            <check-box
-              v-for="(item, index) in $primevue.config.locale.dayNames"
-              v-model="disabledDays"
-              :key="item"
-              :label="item"
-              :value="index"
-              :binary="false"
-            >
-            </check-box>
+          
+          <panel class="p-mt-2" header="Time">
+            <check-box v-model="showTime" label="Show timepicker" @change="changeShowTime"></check-box>
+            <template v-if="showTime">
+              <check-box v-model="timeOnly" label="Show only time"></check-box>
+              <check-box v-model="showSeconds" label="Show seconds"></check-box>
+              <check-box v-model="hideOnDateTimeSelect" label="Hide the overlay on date selection"></check-box>
+              <radio-button-group v-model="hourFormat" :keys="hourFormatKeys"></radio-button-group>
+              <input-wrapper v-slot="{ b }" label="Hours step" class="p-field p-fluid">
+                <input-number v-bind="b" v-model="stepHour"></input-number>
+              </input-wrapper>
+              <input-wrapper v-slot="{ b }" label="Minutes step" class="p-field p-fluid">
+                <input-number v-bind="b" v-model="stepMinute"></input-number>
+              </input-wrapper>
+              <input-wrapper v-slot="{ b }" label="Seconds step" class="p-field p-fluid">
+                <input-number v-bind="b" v-model="stepSecond"></input-number>
+              </input-wrapper>
+              <input-text v-model="timeSeparator" label="Separator of time selector"></input-text>
+            </template>
           </panel>
         </div></div></template
   ></input-demo>
@@ -160,6 +191,23 @@ export default class CalendarDemo extends Vue {
   maxDate: Date | null = null;
   disabledDates: Date[] = [];
   disabledDays: number[] = [];
+  maxDateCount: number | null = null;
+  showButtonBar = false;
+  showTime = true;
+  timeOnly = false;
+  hourFormat = "12";
+  hourFormatKeys = {
+    "12 hour format": "12",
+    "24 hour format": "24"
+  };
+  stepHour = 1;
+  stepMinute = 1;
+  stepSecond = 1;
+  showSeconds = false;
+  hideOnDateTimeSelect = false;
+  timeSeparator = ":";
+  showWeek = false;
+  manualInput = true;
 
   get innerAttrs() {
     return {
@@ -181,7 +229,20 @@ export default class CalendarDemo extends Vue {
       minDate: this.minDate,
       maxDate: this.maxDate,
       disabledDates: this.disabledDates,
-      disabledDays: this.disabledDays
+      disabledDays: this.disabledDays,
+      maxDateCount: this.maxDateCount,
+      showButtonBar: this.showButtonBar,
+      showTime: this.showTime,
+      timeOnly: this.timeOnly,
+      hourFormat: this.hourFormat,
+      stepHour: this.stepHour,
+      stepMinute: this.stepMinute,
+      stepSecond: this.stepSecond,
+      showSeconds: this.showSeconds,
+      hideOnDateTimeSelect: this.hideOnDateTimeSelect,
+      timeSeparator: this.timeSeparator,
+      showWeek: this.showWeek,
+      manualInput: this.manualInput
     };
   }
 
@@ -201,6 +262,11 @@ export default class CalendarDemo extends Vue {
 
   testEvent(type: keyof typeof InputEvents) {
     this.testedEvents[type] = true;
+  }
+
+  changeShowTime() {
+    this.timeOnly = false;
+    this.resetValue();
   }
 }
 </script>

@@ -11,6 +11,7 @@ export default class Calendar extends BaseInput {
       props: { value: this.value },
       attrs: {
         id: this.innerId,
+        autocomplete: "off",
         ...this.$attrs
       },
       scopedSlots: this.$scopedSlots,
