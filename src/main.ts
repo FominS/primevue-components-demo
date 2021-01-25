@@ -1,49 +1,54 @@
-import "./plugins/class-component-hooks";
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import Vuelidate from "vuelidate";
-import PerfectScrollbar from "vue2-perfect-scrollbar";
+import "primeflex/primeflex.css";
+import "primevue/resources/themes/saga-blue/theme.css";
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 
-import ProgressBar from 'primevue/progressbar';
+import Vue from "vue";
+import Vuelidate from "vuelidate";
+import PerfectScrollbar from "vue2-perfect-scrollbar";
+
+import PrimeVue from 'primevue/config';
+import ProgressBar from "primevue/progressbar";
 import Button from "primevue/button";
-import Message from 'primevue/message';
+import Message from "primevue/message";
 import Listbox from "primevue/listbox";
 import Card from "primevue/card";
 import Column from "primevue/column";
 import Checkbox from "primevue/checkbox";
 import Toolbar from "primevue/toolbar";
-import SelectButton from 'primevue/selectbutton';
-import Dialog from 'primevue/dialog';
-import Menu from 'primevue/menu';
+import SelectButton from "primevue/selectbutton";
+import Dialog from "primevue/dialog";
+import Menu from "primevue/menu";
 import PrimeAutoComplete from "primevue/autocomplete";
-import Calendar from "primevue/calendar";
 import Paginator from "primevue/paginator";
-import Tooltip from 'primevue/tooltip';
-import Menubar from 'primevue/menubar';
-import RadioButton from 'primevue/radiobutton';
-import PrimeTextarea from 'primevue/textarea';
-import Panel from 'primevue/panel';
-import InputNumber from 'primevue/inputnumber';
-
-import { InputWrapper } from '@/components/auxiliary';
-import InputText from '@/components/InputText';
-import Textarea from '@/components/Textarea';
-import Dropdown from '@/components/Dropdown';
-import AutoComplete from '@/components/AutoComplete';
-import MultiSelect from '@/components/MultiSelect';
-
-import 'primeflex/primeflex.css';
-import 'primevue/resources/themes/saga-blue/theme.css';
-import 'primevue/resources/primevue.min.css';
-import 'primeicons/primeicons.css';
+import Tooltip from "primevue/tooltip";
+import Menubar from "primevue/menubar";
+import RadioButton from "primevue/radiobutton";
+import PrimeTextarea from "primevue/textarea";
+import Panel from "primevue/panel";
+import InputNumber from "primevue/inputnumber";
 
 import "@/sass/style.scss";
+import "@/plugins/class-component-hooks";
+
+import App from "@/App.vue";
+import router from "@/router";
+import { primeConfig } from "@/utils/constants"
+
+import { InputWrapper } from "@/components/auxiliary";
+import InputText from "@/components/InputText";
+import Textarea from "@/components/Textarea";
+import Dropdown from "@/components/Dropdown";
+import AutoComplete from "@/components/AutoComplete";
+import MultiSelect from "@/components/MultiSelect";
+import Calendar from "@/components/Calendar";
 
 Vue.config.productionTip = false;
+Vue.directive("tooltip", Tooltip);
 Vue.use(Vuelidate);
 Vue.use(PerfectScrollbar);
+Vue.use(PrimeVue, primeConfig)
 
 Vue.component("ProgressBar", ProgressBar);
 Vue.component("TextArea", Textarea);
@@ -59,7 +64,6 @@ Vue.component("SelectButton", SelectButton);
 Vue.component("Dialog", Dialog);
 Vue.component("Menu", Menu);
 Vue.component("PrimeAutoComplete", PrimeAutoComplete);
-Vue.component("Calendar", Calendar);
 Vue.component("Paginator", Paginator);
 Vue.component("Menubar", Menubar);
 Vue.component("RadioButton", RadioButton);
@@ -72,8 +76,7 @@ Vue.component("InputText", InputText);
 Vue.component("Dropdown", Dropdown);
 Vue.component("AutoComplete", AutoComplete);
 Vue.component("MultiSelect", MultiSelect);
-
-Vue.directive('tooltip', Tooltip);
+Vue.component("Calendar", Calendar);
 
 new Vue({
   router,
