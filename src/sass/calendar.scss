@@ -1,0 +1,10 @@
+// TODO импорт из темы, когда будет готова
+@import "./style.scss";
+
+.p-calendar .p-datepicker {
+  min-width: auto;
+}
+
+.p-calendar.p-invalid .p-datepicker {
+  border-color: $errorColor;
+}

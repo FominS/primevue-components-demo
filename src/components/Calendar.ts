@@ -1,6 +1,7 @@
 import PrimeCalendar from "primevue/calendar";
 import { Component } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
+import "@/sass/calendar.scss";
 
 @Component({
   inheritAttrs: false
@@ -8,7 +9,7 @@ import BaseInput from "@/components/BaseInput";
 export default class Calendar extends BaseInput {
   createInput() {
     return this.$createElement(PrimeCalendar, {
-      props: { value: this.value },
+      props: { value: this.value, manualInput: false },
       attrs: {
         id: this.innerId,
         autocomplete: "off",
