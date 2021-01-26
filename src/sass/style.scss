@@ -1,3 +1,5 @@
+$errorColor: #f24f4b;
+
 html,
 body {
   font-size: 14px;
@@ -36,7 +38,7 @@ p {
 }
 
 .p-dialog {
-  min-width: 480px;
+  width: 50vw;
 }
 
 .p-dialog-footer {
@@ -61,6 +63,10 @@ p {
   flex: 0 0 auto;
 }
 
+.list-item-checkbox .p-field {
+  margin-bottom: 0;
+}
+
 .list-item-checkbox + .list-item-body .list-item-content,
 .list-item-checkbox + .list-item-content {
   padding-left: 0;
@@ -77,7 +83,7 @@ p {
   text-decoration: none;
   color: inherit;
   flex: 1 1 auto;
-  width:100%;
+  width: 100%;
 }
 
 .list-item-content {
@@ -89,8 +95,6 @@ p {
   flex: 0 0 auto;
   padding: 1rem;
 }
-
-.list-item-title {}
 
 .list-item-subtitle {
   font-size: 0.85rem;
@@ -151,23 +155,24 @@ a.p-button {
   justify-content: center;
 }
 
-.info-container-icon{
+.info-container-icon {
   width: 8rem;
   height: auto;
   margin: 1rem;
 }
 
-.info-container-title{
+.info-container-title {
   font-size: 1.85rem;
   margin: 1rem 1rem 2rem 1rem;
-  color: var(--text-color-secondary)
+  // FIX это не поддерживается в IE11
+  color: var(--text-color-secondary);
 }
 
-.p-toast{
-  z-index: 9999
+.p-toast {
+  z-index: 9999;
 }
 
-.p-toast-detail{
+.p-toast-detail {
   overflow: visible;
   word-break: break-all;
   max-height: 200px;
@@ -175,10 +180,21 @@ a.p-button {
   white-space: pre-wrap;
 }
 
-.p-toast .p-toast-message .p-toast-message-content .p-toast-summary{
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary {
   font-weight: 500;
 }
 
-.p-field .p-field__hint{
+.p-field .p-field__hint {
   display: block;
+}
+
+.p-field-checkbox {
+  margin-bottom: 0px;
+}
+
+@media (max-width: 960px) {
+  .p-dialog {
+    width: 100vw;
+    margin: 0 10px;
+  }
 }

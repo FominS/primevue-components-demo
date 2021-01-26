@@ -64,9 +64,8 @@
           <check-box v-model="monthNavigator" label="Month as a dropdown (does not work)"></check-box>
           <check-box v-model="showButtonBar" label="Show today and clear buttons"></check-box>
           <check-box v-model="showWeek" label="Show week numbers"></check-box>
-          <check-box v-model="manualInput" label="Allow entering the date manually via typing"></check-box>
           <check-box v-model="useSlots" label="Use slots (header, footer, date)"></check-box>
-          <panel header="Disabled weekdays">
+          <panel header="Disabled weekdays" class="p-mt-2">
             <check-box
               v-for="(item, index) in $primevue.config.locale.dayNames"
               v-model="disabledDays"
@@ -112,7 +111,7 @@
               </input-wrapper>
             </template>
           </panel>
-          
+
           <panel class="p-mt-2" header="Time">
             <check-box v-model="showTime" label="Show timepicker" @change="changeShowTime"></check-box>
             <template v-if="showTime">
@@ -207,7 +206,6 @@ export default class CalendarDemo extends Vue {
   hideOnDateTimeSelect = false;
   timeSeparator = ":";
   showWeek = false;
-  manualInput = true;
 
   get innerAttrs() {
     return {
@@ -241,8 +239,7 @@ export default class CalendarDemo extends Vue {
       showSeconds: this.showSeconds,
       hideOnDateTimeSelect: this.hideOnDateTimeSelect,
       timeSeparator: this.timeSeparator,
-      showWeek: this.showWeek,
-      manualInput: this.manualInput
+      showWeek: this.showWeek
     };
   }
 
