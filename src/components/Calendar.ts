@@ -36,36 +36,43 @@ export default class Calendar extends BaseInput {
    * Формат строковой даты по библиотеке dayjs, если
    * нужно вернуть дату с типом String.
    */
-  @Prop({ required: false, type: String, default: "YYYY-MM-DDTHH:mm:ss" })
+  @Prop({ required: false, type: String })
   dateMask!: string;
 
   get calendarValue() {
     if (isDateValue(this.value) || isDatesArrayValue(this.value)) return this.value;
 
     if (isStringValue(this.value)) {
-      return dayjs(this.value as string, this.dateMask).toDate();
+      return dayjs(this.value as string, this.localDateMask).toDate();
     }
 
     if (isStringArrayValue(this.value)) {
       return (this.value as string[]).map(str => {
-        return dayjs(str, this.dateMask).toDate();
+        return dayjs(str, this.localDateMask).toDate();
       });
     }
 
     return this.value;
   }
 
+  get localDateMask() {
+    if (this.dateMask) return this.dateMask;
+
+    const mask = "YYYY-MM-DDTHH:mm:ss";
+    return this.$attrs.showTime ? mask : mask.split("T")[0];
+  }
+
   getOuterValue(date: Date | Date[] | [Date, null] | null) {
     if (this.returnDate) return date;
 
-    if (isDate(date)) return dayjs(date).format(this.dateMask);
+    if (isDate(date)) return dayjs(date).format(this.localDateMask);
 
     if (isDatesArrayValue(date)) {
       // Для календаря в режиме Интервал - вторая дата = null (пока не выбрана)
       const nonNullDates = (date as Date[]).filter(date => date);
 
       return nonNullDates.map(date => {
-        return dayjs(date).format(this.dateMask);
+        return dayjs(date).format(this.localDateMask);
       });
     }
 
