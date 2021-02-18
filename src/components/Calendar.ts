@@ -1,8 +1,8 @@
+import moment from "moment"
 import { isDate, isString, isArray } from "underscore";
 import PrimeCalendar from "primevue/calendar";
 import { Component, Prop } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
-import dayjs from "@/plugins/dayjs";
 import "@/sass/calendar.scss";
 
 const isDatesArrayValue = (value: unknown) => {
@@ -33,7 +33,7 @@ export default class Calendar extends BaseInput {
   returnDate!: boolean;
 
   /**
-   * Формат строковой даты по библиотеке dayjs, если
+   * Формат строковой даты по библиотеке momentjs, если
    * нужно вернуть дату с типом String.
    */
   @Prop({ required: false, type: String })
@@ -43,12 +43,12 @@ export default class Calendar extends BaseInput {
     if (isDateValue(this.value) || isDatesArrayValue(this.value)) return this.value;
 
     if (isStringValue(this.value)) {
-      return dayjs(this.value as string, this.localDateMask).toDate();
+      return moment(this.value as string, this.localDateMask).toDate();
     }
 
     if (isStringArrayValue(this.value)) {
       return (this.value as string[]).map(str => {
-        return dayjs(str, this.localDateMask).toDate();
+        return moment(str, this.localDateMask).toDate();
       });
     }
 
@@ -65,14 +65,14 @@ export default class Calendar extends BaseInput {
   getOuterValue(date: Date | Date[] | [Date, null] | null) {
     if (this.returnDate) return date;
 
-    if (isDate(date)) return dayjs(date).format(this.localDateMask);
+    if (isDate(date)) return moment(date).format(this.localDateMask);
 
     if (isDatesArrayValue(date)) {
       // Для календаря в режиме Интервал - вторая дата = null (пока не выбрана)
       const nonNullDates = (date as Date[]).filter(date => date);
 
       return nonNullDates.map(date => {
-        return dayjs(date).format(this.localDateMask);
+        return moment(date).format(this.localDateMask);
       });
     }
 
