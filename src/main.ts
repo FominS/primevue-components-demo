@@ -28,7 +28,6 @@ import RadioButton from "primevue/radiobutton";
 import PrimeTextarea from "primevue/textarea";
 import Panel from "primevue/panel";
 import InputNumber from "primevue/inputnumber";
-import Divider from "primevue/divider";
 
 import "@/sass/style.scss";
 import "@/plugins/class-component-hooks";
@@ -71,7 +70,6 @@ Vue.component("RadioButton", RadioButton);
 Vue.component("PrimeTextarea", PrimeTextarea);
 Vue.component("Panel", Panel);
 Vue.component("InputNumber", InputNumber);
-Vue.component("Divider", Divider);
 
 Vue.component("InputWrapper", InputWrapper);
 Vue.component("InputText", InputText);
