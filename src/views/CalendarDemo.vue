@@ -27,12 +27,15 @@
           <i class="pi pi-star"></i>
         </template>
       </Calendar>
+      <h2>Value type</h2>
+      <span>{{ valueType }}</span>
     </template>
     <template #options>
       <div class="p-grid">
         <div class="p-col-6">
           <input-options :label.sync="label" :error.sync="error" :hint.sync="hint"></input-options>
-          <input-text v-model="dateFormat" label="Date format"></input-text>
+          <input-text v-model="dateFormat" label="Date format to display in input"></input-text>
+          <input-text v-model="dateMask" label="Date format for return value with type 'String'"></input-text>
           <input-wrapper v-slot="{ b }" class="p-field p-fluid" label="Number of months to display">
             <input-number v-bind="b" v-model="numberOfMonths"></input-number>
           </input-wrapper>
@@ -65,6 +68,7 @@
           <check-box v-model="showButtonBar" label="Show today and clear buttons"></check-box>
           <check-box v-model="showWeek" label="Show week numbers"></check-box>
           <check-box v-model="useSlots" label="Use slots (header, footer, date)"></check-box>
+          <check-box v-model="returnDate" label="Return value is of type Date instead of String"></check-box>
           <panel header="Disabled weekdays" class="p-mt-2">
             <check-box
               v-for="(item, index) in $primevue.config.locale.dayNames"
@@ -136,6 +140,7 @@
 </template>
 
 <script lang="ts">
+import { isDate, isString, isArray } from "underscore";
 import { Component, Vue } from "vue-property-decorator";
 import { Checkbox, RadioButtonGroup } from "@/components";
 import { InputOptions, Demo } from "@/components/auxiliary";
@@ -163,7 +168,7 @@ export default class CalendarDemo extends Vue {
   label = "Label";
   error = "";
   hint = "";
-  value = null;
+  value: string | null = null;
   selectionMode = "single";
   selectionModeKeys = {
     Single: "single",
@@ -171,6 +176,7 @@ export default class CalendarDemo extends Vue {
     Range: "range"
   };
   dateFormat = "yy-mm-dd";
+  dateMask = "YYYY-MM-DDTHH:mm:ss";
   inline = false;
   showOtherMonths = true;
   selectOtherMonths = false;
@@ -206,6 +212,21 @@ export default class CalendarDemo extends Vue {
   hideOnDateTimeSelect = false;
   timeSeparator = ":";
   showWeek = false;
+  returnDate = false;
+
+  get valueType(): string {
+    if (!this.value) return "";
+
+    if (isArray(this.value)) {
+      if (isDate(this.value[0])) return "Array of dates";
+      if (isString(this.value[0])) return "Array of strings";
+    }
+
+    if (isDate(this.value)) return "Date";
+    if (isString(this.value)) return "String";
+
+    return "Type is neither date, string, array of dates or array of strings";
+  }
 
   get innerAttrs() {
     return {
@@ -214,6 +235,7 @@ export default class CalendarDemo extends Vue {
       error: this.error,
       selectionMode: this.selectionMode,
       dateFormat: this.dateFormat,
+      dateMask: this.dateMask,
       inline: this.inline,
       showOtherMonths: this.showOtherMonths,
       selectOtherMonths: this.selectOtherMonths,
@@ -239,7 +261,8 @@ export default class CalendarDemo extends Vue {
       showSeconds: this.showSeconds,
       hideOnDateTimeSelect: this.hideOnDateTimeSelect,
       timeSeparator: this.timeSeparator,
-      showWeek: this.showWeek
+      showWeek: this.showWeek,
+      returnDate: this.returnDate
     };
   }
 

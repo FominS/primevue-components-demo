@@ -16,6 +16,7 @@
     "@types/uuid": "^8.0.0",
     "@types/vuelidate": "^0.7.13",
     "core-js": "^3.6.4",
+    "dayjs": "^1.10.4",
     "jsbarcode": "^3.11.0",
     "lodash": "^4.17.20",
     "primeflex": "^2.0.0",
