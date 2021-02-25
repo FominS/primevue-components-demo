@@ -5,45 +5,54 @@ import { Component, Prop } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 import "@/sass/calendar.scss";
 
+// Для prime-календаря в режиме Интервал вторая дата = null пока не выбрана
+type CalendarDate = Date | Date[] | [Date, null] | null;
+type OuterDate = string | string[] | [string, null] | null | undefined;
+
 @Component({
   inheritAttrs: false
 })
 export default class Calendar extends BaseInput {
   @Prop({ type: [String, Array] })
-  value!: string | string[] | null | undefined;
+  value!: OuterDate;
 
   get calendarValue() {
     if (isString(this.value)) {
-      return moment(this.value as string, this.localDateMask).toDate();
+      return moment(this.value, this.localDateMask).toDate();
     }
 
     if (isArray(this.value)) {
-      return (this.value as string[]).map(str => {
+      // FIX Each member of the union type has signatures, but none of those signatures are compatible with each other
+      // @ts-ignore
+      return this.value.map(str => {
         return str ? moment(str, this.localDateMask).toDate() : str;
       });
     }
 
-    return this.value;
+    return null;
+  }
+
+  set calendarValue(date: CalendarDate) {
+    let result: OuterDate = null;
+    if (isDate(date)) result = moment(date).format(this.localDateMask);
+
+    if (isArray(date)) {
+      // FIX Each member of the union type has signatures, but none of those signatures are compatible with each other
+      // @ts-ignore
+      result = date.map(date => {
+        return date ? moment(date).format(this.localDateMask) : date;
+      });
+    }
+
+    this.$emit("input", result);
   }
 
   get localDateMask() {
     return this.$attrs.showTime ? "YYYY-MM-DDTHH:mm:ss" : "YYYY-MM-DD";
   }
 
-  getOuterValue(date: Date | Date[] | [Date, null] | null) {
-    if (isDate(date)) return moment(date).format(this.localDateMask);
-
-    if (isArray(date)) {
-      return (date as Date[]).map(date => {
-        return date ? moment(date).format(this.localDateMask) : date;
-      });
-    }
-
-    return date;
-  }
-
-  input(date: Date | Date[] | null) {
-    this.$emit("input", this.getOuterValue(date));
+  input(date: CalendarDate) {
+    this.calendarValue = date;
   }
 
   createInput() {

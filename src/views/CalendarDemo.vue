@@ -35,7 +35,6 @@
         <div class="p-col-6">
           <input-options :label.sync="label" :error.sync="error" :hint.sync="hint"></input-options>
           <input-text v-model="dateFormat" label="Date format to display in input"></input-text>
-          <input-text v-model="dateMask" label="Date format for return value with type 'String'"></input-text>
           <input-wrapper v-slot="{ b }" class="p-field p-fluid" label="Number of months to display">
             <input-number v-bind="b" v-model="numberOfMonths"></input-number>
           </input-wrapper>
@@ -68,7 +67,6 @@
           <check-box v-model="showButtonBar" label="Show today and clear buttons"></check-box>
           <check-box v-model="showWeek" label="Show week numbers"></check-box>
           <check-box v-model="useSlots" label="Use slots (header, footer, date)"></check-box>
-          <check-box v-model="returnDate" label="Return value is of type Date instead of String"></check-box>
           <panel header="Disabled weekdays" class="p-mt-2">
             <check-box
               v-for="(item, index) in $primevue.config.locale.dayNames"
@@ -168,7 +166,7 @@ export default class CalendarDemo extends Vue {
   label = "Label";
   error = "";
   hint = "";
-  value: string | null = null;
+  value: string | string[] | [string, null] | null | undefined = null;
   selectionMode = "single";
   selectionModeKeys = {
     Single: "single",
@@ -176,7 +174,6 @@ export default class CalendarDemo extends Vue {
     Range: "range"
   };
   dateFormat = "yy-mm-dd";
-  dateMask = "YYYY-MM-DDTHH:mm:ss";
   inline = false;
   showOtherMonths = true;
   selectOtherMonths = false;
@@ -212,7 +209,6 @@ export default class CalendarDemo extends Vue {
   hideOnDateTimeSelect = false;
   timeSeparator = ":";
   showWeek = false;
-  returnDate = false;
 
   get valueType(): string {
     if (!this.value) return "";
@@ -235,7 +231,6 @@ export default class CalendarDemo extends Vue {
       error: this.error,
       selectionMode: this.selectionMode,
       dateFormat: this.dateFormat,
-      dateMask: this.dateMask,
       inline: this.inline,
       showOtherMonths: this.showOtherMonths,
       selectOtherMonths: this.selectOtherMonths,
@@ -261,8 +256,7 @@ export default class CalendarDemo extends Vue {
       showSeconds: this.showSeconds,
       hideOnDateTimeSelect: this.hideOnDateTimeSelect,
       timeSeparator: this.timeSeparator,
-      showWeek: this.showWeek,
-      returnDate: this.returnDate
+      showWeek: this.showWeek
     };
   }
 
