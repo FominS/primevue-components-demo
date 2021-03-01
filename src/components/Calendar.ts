@@ -5,28 +5,23 @@ import { Component, Prop } from "vue-property-decorator";
 import BaseInput from "@/components/BaseInput";
 import "@/sass/calendar.scss";
 
-// Для prime-календаря в режиме Интервал вторая дата = null пока не выбрана
-type CalendarDate = Date | Date[] | [Date, null] | null;
-type OuterDate = string | string[] | [string, null] | null | undefined;
+type CalendarDate = Date | (Date | null)[] | null | undefined;
+type OuterDate = string | (string | null)[] | null | undefined;
 
 @Component({
   inheritAttrs: false
 })
 export default class Calendar extends BaseInput {
   @Prop({ type: [String, Array] })
-  value!: OuterDate;
+  value?: OuterDate;
 
   get calendarValue() {
     if (isString(this.value)) {
-      return moment(this.value, this.localDateMask).toDate();
+      return moment(this.value, this.format).toDate();
     }
 
     if (isArray(this.value)) {
-      // FIX Each member of the union type has signatures, but none of those signatures are compatible with each other
-      // @ts-ignore
-      return this.value.map(str => {
-        return str ? moment(str, this.localDateMask).toDate() : str;
-      });
+      return this.value.map(str => (str ? moment(str, this.format).toDate() : null));
     }
 
     return null;
@@ -34,21 +29,29 @@ export default class Calendar extends BaseInput {
 
   set calendarValue(date: CalendarDate) {
     let result: OuterDate = null;
-    if (isDate(date)) result = moment(date).format(this.localDateMask);
+    if (isDate(date)) {
+      result = moment(date).format(this.format);
+    }
 
     if (isArray(date)) {
-      // FIX Each member of the union type has signatures, but none of those signatures are compatible with each other
-      // @ts-ignore
-      result = date.map(date => {
-        return date ? moment(date).format(this.localDateMask) : date;
-      });
+      result = date.map(date => (date ? moment(date).format(this.format) : date));
     }
 
     this.$emit("input", result);
   }
 
-  get localDateMask() {
-    return this.$attrs.showTime ? "YYYY-MM-DDTHH:mm:ss" : "YYYY-MM-DD";
+  get format() {
+    if (this.$attrs.timeOnly) {
+      if (this.$attrs.showSeconds) return "hh:mm:ss";
+      return "hh:mm";
+    }
+    
+    if (this.$attrs.showTime) {
+      if (this.$attrs.showSeconds) return "YYYY-MM-DDThh:mm:ssZ";
+      return "YYYY-MM-DDThh:mmZ"
+    }
+
+    return "YYYY-MM-DD"
   }
 
   input(date: CalendarDate) {
