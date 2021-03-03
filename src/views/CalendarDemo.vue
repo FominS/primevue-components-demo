@@ -27,12 +27,14 @@
           <i class="pi pi-star"></i>
         </template>
       </Calendar>
+      <h2>Value type</h2>
+      <span>{{ valueType }}</span>
     </template>
     <template #options>
       <div class="p-grid">
         <div class="p-col-6">
           <input-options :label.sync="label" :error.sync="error" :hint.sync="hint"></input-options>
-          <input-text v-model="dateFormat" label="Date format"></input-text>
+          <input-text v-model="dateFormat" label="Date format to display in input"></input-text>
           <input-wrapper v-slot="{ b }" class="p-field p-fluid" label="Number of months to display">
             <input-number v-bind="b" v-model="numberOfMonths"></input-number>
           </input-wrapper>
@@ -136,6 +138,7 @@
 </template>
 
 <script lang="ts">
+import { isDate, isString, isArray } from "underscore";
 import { Component, Vue } from "vue-property-decorator";
 import { Checkbox, RadioButtonGroup } from "@/components";
 import { InputOptions, Demo } from "@/components/auxiliary";
@@ -163,7 +166,7 @@ export default class CalendarDemo extends Vue {
   label = "Label";
   error = "";
   hint = "";
-  value = null;
+  value: string | string[] | [string, null] | null | undefined = null;
   selectionMode = "single";
   selectionModeKeys = {
     Single: "single",
@@ -206,6 +209,20 @@ export default class CalendarDemo extends Vue {
   hideOnDateTimeSelect = false;
   timeSeparator = ":";
   showWeek = false;
+
+  get valueType(): string {
+    if (!this.value) return "";
+
+    if (isArray(this.value)) {
+      if (isDate(this.value[0])) return "Array of dates";
+      if (isString(this.value[0])) return "Array of strings";
+    }
+
+    if (isDate(this.value)) return "Date";
+    if (isString(this.value)) return "String";
+
+    return "Type is neither date, string, array of dates or array of strings";
+  }
 
   get innerAttrs() {
     return {
